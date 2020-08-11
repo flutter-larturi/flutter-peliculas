@@ -86,21 +86,23 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
             ),
           ),
         ),
-        SizedBox(width: 20.0,),
+        SizedBox(width: 20.0),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(pelicula.title, style: Theme.of(context).textTheme.headline6, overflow: TextOverflow.ellipsis),
               Text(pelicula.originalTitle, style: Theme.of(context).textTheme.subtitle1, overflow: TextOverflow.ellipsis),
+              SizedBox(height: 5.0),
               Row(
                 children: <Widget>[
                   Icon(Icons.star_border),
-                  Text(pelicula.voteAverage.toString(), style: Theme.of(context).textTheme.subtitle1)
+                  Text(pelicula.voteAverage.toString() + ' (' + pelicula.releaseDate.substring(0,4) + ')', style: Theme.of(context).textTheme.subtitle1),
+                  
                 ],
-              )
+              ),
             ],
-          )
+          ),
         )
       ],
     ),

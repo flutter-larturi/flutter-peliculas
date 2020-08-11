@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     peliculasProvider.getPopulares();
+    peliculasProvider.getTopRated();
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +37,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _swiperTarjetas(),
-            _footer(context)
+            _populares(context),
+            _topRated(context)
           ],
         ),
       ),
@@ -64,7 +66,25 @@ class HomePage extends StatelessWidget {
 
   }
 
-  Widget _footer(BuildContext context) {
+  Widget _populares(BuildContext context) {
+    return _genericHorizontalWidget(
+      context, 
+      'Populares',
+       peliculasProvider.popularesStream, 
+       peliculasProvider.getPopulares
+    );
+  }
+
+  Widget _topRated(BuildContext context) {
+    return _genericHorizontalWidget(
+      context, 
+      'Mejor Puntuación', 
+      peliculasProvider.topRatedStream, 
+      peliculasProvider.getTopRated
+    );
+  }
+
+  Widget _genericHorizontalWidget(BuildContext context, String titulo, Stream stream, Function siguiente) {
 
     return Container(
       width: double.infinity,
@@ -72,20 +92,24 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
+
           Container(
             padding: EdgeInsets.only(left: 20.0, top: 20.0),
-            child: Text('Populares', style: Theme.of(context).textTheme.subtitle1)
+            child: Text(titulo, style: Theme.of(context).textTheme.subtitle1)
           ),
+
           SizedBox(height: 10.0),
           
+          // Crea el StreamBuilder con el dataset de peliculas
           StreamBuilder(
-            stream: peliculasProvider.popularesStream,
+            stream: stream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
 
               if(snapshot.hasData) {
+                // Por cada pelicula arma la tarjeta con link a la pagina de detalle
                 return MovieHorizontal(
                   peliculas: snapshot.data,
-                  siguientePagina: peliculasProvider.getPopulares
+                  siguientePagina: siguiente
                 );
               } else {
                 return Center(child: CircularProgressIndicator());

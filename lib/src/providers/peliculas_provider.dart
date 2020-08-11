@@ -12,18 +12,26 @@ class PeliculasProvider {
   String _language = 'es-ES';
 
   int _popularesPage = 0;
-  bool _cargando = false;
+  int _topRatedPage = 0;
+
+  bool _cargandoPopulares = false;
+  bool _cargandoTopRated = false;
 
   List<Pelicula> _populares = new List();
+  List<Pelicula> _topRated = new List();
 
   final _popularesStreamController = StreamController<List<Pelicula>>.broadcast();
+  final _topRatedStreamController = StreamController<List<Pelicula>>.broadcast();
 
   Function(List<Pelicula>) get popularesSink => _popularesStreamController.sink.add;
-
   Stream<List<Pelicula>> get popularesStream => _popularesStreamController.stream;
+
+  Function(List<Pelicula>) get topRatedSink => _topRatedStreamController.sink.add;
+  Stream<List<Pelicula>> get topRatedStream => _topRatedStreamController.stream;
 
   void disposeStreams() {
     _popularesStreamController?.close();
+    _topRatedStreamController?.close();
   }
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url) async {
@@ -41,31 +49,6 @@ class PeliculasProvider {
     });
 
     return await _procesarRespuesta(url);
-
-  }
-
-  Future<List<Pelicula>> getPopulares() async {
-
-    if (_cargando) return [];
-
-    _cargando = true;
-
-    _popularesPage++;
-
-    final url = Uri.https(_url, '3/movie/popular', {
-      'api_key' : _apiKey,
-      'language': _language,
-      'page': _popularesPage.toString()
-    });
-
-    final resp = await _procesarRespuesta(url);
-
-    _populares.addAll(resp);
-
-    popularesSink(_populares);
-
-    _cargando = false;
-    return resp;
 
   }
 
@@ -97,4 +80,54 @@ class PeliculasProvider {
 
   }
 
+  Future<List<Pelicula>> getPopulares() async {
+
+    if (_cargandoPopulares) return [];
+
+    _cargandoPopulares = true;
+
+    _popularesPage++;
+
+    final url = Uri.https(_url, '3/movie/popular', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'page': _popularesPage.toString()
+    });
+
+    final resp = await _procesarRespuesta(url);
+
+    _populares.addAll(resp);
+
+    popularesSink(_populares);
+
+    _cargandoPopulares = false;
+    return resp;
+
+  }
+
+  Future<List<Pelicula>> getTopRated() async {
+
+    if (_cargandoTopRated) return [];
+
+    _cargandoTopRated = true;
+
+    _topRatedPage++;
+
+    final url = Uri.https(_url, '3/movie/top_rated', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'page': _topRatedPage.toString()
+    });
+
+    final resp = await _procesarRespuesta(url);
+
+    _topRated.addAll(resp);
+
+    topRatedSink(_topRated);
+
+    _cargandoTopRated = false;
+    return resp;
+
+  }
+  
 }
