@@ -13,6 +13,7 @@ class PeliculaDetalle extends StatelessWidget {
     final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      backgroundColor: Colors.black12,
       body: CustomScrollView(
         slivers: <Widget>[
           _crearAppbar(pelicula),
@@ -28,7 +29,7 @@ class PeliculaDetalle extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   margin: const EdgeInsets.only(bottom: 20.0),
-                  child: Text('Cast', style: Theme.of(context).textTheme.subtitle1)
+                  child: Text('Cast', style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold))
                 ),
 
                 _crearCasting(pelicula),
@@ -79,7 +80,7 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
         Hero(
           tag: pelicula.uniqueId,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(1.0),
             child: Image(
               image: NetworkImage(pelicula.getPosterImg()),
               height: 150.0,
@@ -91,13 +92,14 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(pelicula.title, style: Theme.of(context).textTheme.headline6, overflow: TextOverflow.ellipsis),
-              Text(pelicula.originalTitle, style: Theme.of(context).textTheme.subtitle1, overflow: TextOverflow.ellipsis),
-              SizedBox(height: 5.0),
+              Text(pelicula.title, style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+              SizedBox(height: 4.0),
+              Text(pelicula.originalTitle + ' (' + pelicula.releaseDate.substring(0,4) + ')', style: TextStyle(color: Colors.grey, fontSize: 18.0), overflow: TextOverflow.ellipsis),
+              SizedBox(height: 8.0),
               Row(
                 children: <Widget>[
-                  Icon(Icons.star_border),
-                  Text(pelicula.voteAverage.toString() + ' (' + pelicula.releaseDate.substring(0,4) + ')', style: Theme.of(context).textTheme.subtitle1),
+                  Icon(Icons.star, color: Colors.white),
+                  Text(pelicula.voteAverage.toString(), style: TextStyle(color: Colors.white, fontSize: 19.0)),
                   
                 ],
               ),
@@ -113,7 +115,7 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
 Widget _descripcion(Pelicula pelicula) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-      child: Text(pelicula.overview, textAlign: TextAlign.justify,),
+      child: Text(pelicula.overview, textAlign: TextAlign.justify, style: TextStyle(color: Colors.white70, fontSize: 18.0)),
     );
 }
 
@@ -158,11 +160,12 @@ Widget _actorTarjeta(Actor actor) {
     child: Column(
       children: <Widget>[
         ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(200.0),
           child: FadeInImage(
             placeholder: AssetImage('assets/img/no-image.jpg'), 
             image: NetworkImage(actor.getFoto()),
-            height: 150.0,
+            height: 100.0,
+            width: 100.0,
             fit: BoxFit.cover,
           ),
         ),
@@ -172,6 +175,7 @@ Widget _actorTarjeta(Actor actor) {
           child: Text(
             actor.name,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.white, fontSize: 16.0)
           ),
         )
       ],

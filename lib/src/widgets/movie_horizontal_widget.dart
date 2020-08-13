@@ -6,8 +6,9 @@ class MovieHorizontal extends StatelessWidget {
 
   final List<Pelicula> peliculas;
   final Function siguientePagina;
+  final String seccion;
 
-  MovieHorizontal({ @required this.peliculas,  @required this.siguientePagina });
+  MovieHorizontal({ @required this.peliculas,  @required this.siguientePagina, @required this.seccion });
 
   final _pageController = new PageController(
     initialPage: 1,
@@ -27,36 +28,36 @@ class MovieHorizontal extends StatelessWidget {
     });
 
     return Container(
-      height: _screenSize.height * 0.30,
+      height: _screenSize.height * 0.22,
       child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
         itemCount: peliculas.length,
         itemBuilder: (context, i) {
-          return _tarjeta(context, peliculas[i]);
+          return _tarjeta(context, peliculas[i], seccion);
         },
       ),
     );
   }
 
-  Widget _tarjeta(BuildContext context, Pelicula pelicula) {
+  Widget _tarjeta(BuildContext context, Pelicula pelicula, String seccion) {
 
-    pelicula.uniqueId = '${pelicula.id}-poster';
+    pelicula.uniqueId = pelicula.id.toString() + '-' + seccion;
 
     final tarjeta = Container(
        
-        margin: EdgeInsets.only(right: 15.0),
+        margin: EdgeInsets.only(right: 10.0),
         child: Column(
           children: <Widget>[
             Hero(
               tag: pelicula.uniqueId,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(1.0),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/img/no-image.jpg'), 
                   image: NetworkImage(pelicula.getPosterImg()),
                   fit: BoxFit.cover,
-                  height: 160.0,
+                  height: 170.0,
                 ),
               ),
             ),
@@ -84,11 +85,11 @@ class MovieHorizontal extends StatelessWidget {
     return peliculas.map((pelicula) {
 
       return Container(
-        margin: EdgeInsets.only(right: 15.0),
+        margin: EdgeInsets.only(right: 5.0),
         child: Column(
           children: <Widget>[
             ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(0.0),
               child: FadeInImage(
                 placeholder: AssetImage('assets/img/no-image.jpg'), 
                 image: NetworkImage(pelicula.getPosterImg()),

@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         'detalle'   :   (BuildContext context) => PeliculaDetalle(),
         'actor'     :   (BuildContext context) => ActorDetelle(),
       },
+      
     );
   }
 }

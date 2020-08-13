@@ -71,19 +71,20 @@ class Pelicula {
   }
 
   getPosterImg() {
-    if (posterPath == null) {
-      return 'https://labs357.com/nuevo/wp-content/themes/consultix/images/no-image-found-360x250.png';
+    if (posterPath == null || posterPath == 'null') {
+        return 'https://labs357.com/nuevo/wp-content/themes/consultix/images/no-image-found-360x250.png';
     } else {
-      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+        return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
   }
 
   getBackgroundImg() {
-    if (posterPath == null) {
+    if (posterPath == null || posterPath == 'null') {
       return 'https://labs357.com/nuevo/wp-content/themes/consultix/images/no-image-found-360x250.png';
     } else {
-      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
+
   }
 
 

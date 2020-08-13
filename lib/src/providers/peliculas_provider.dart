@@ -11,27 +11,62 @@ class PeliculasProvider {
   String _url      = 'api.themoviedb.org';
   String _language = 'es-ES';
 
+  // Populares
   int _popularesPage = 0;
-  int _topRatedPage = 0;
-
   bool _cargandoPopulares = false;
-  bool _cargandoTopRated = false;
-
   List<Pelicula> _populares = new List();
-  List<Pelicula> _topRated = new List();
-
   final _popularesStreamController = StreamController<List<Pelicula>>.broadcast();
-  final _topRatedStreamController = StreamController<List<Pelicula>>.broadcast();
-
   Function(List<Pelicula>) get popularesSink => _popularesStreamController.sink.add;
   Stream<List<Pelicula>> get popularesStream => _popularesStreamController.stream;
 
+  // Top Rated
+  int _topRatedPage = 0;
+  bool _cargandoTopRated = false;
+  List<Pelicula> _topRated = new List();
+  final _topRatedStreamController = StreamController<List<Pelicula>>.broadcast();
   Function(List<Pelicula>) get topRatedSink => _topRatedStreamController.sink.add;
   Stream<List<Pelicula>> get topRatedStream => _topRatedStreamController.stream;
+
+  // Latests
+  int _latestPage = 0;
+  bool _cargandoLatest = false;
+  List<Pelicula> _latest = new List();
+  final _latestStreamController = StreamController<List<Pelicula>>.broadcast();
+  Function(List<Pelicula>) get latestSink => _latestStreamController.sink.add;
+  Stream<List<Pelicula>> get latestStream => _latestStreamController.stream;
+
+  // Upcoming
+  int _upcomingPage = 0;
+  bool _cargandoUpcoming = false;
+  List<Pelicula> _upcoming = new List();
+  final _upcomingStreamController = StreamController<List<Pelicula>>.broadcast();
+  Function(List<Pelicula>) get upcomingSink => _upcomingStreamController.sink.add;
+  Stream<List<Pelicula>> get upcomingStream => _upcomingStreamController.stream;
+
+  // Español
+  int _espanolPage = 0;
+  bool _cargandoEspanol = false;
+  List<Pelicula> _espanol = new List();
+  final _espanolStreamController = StreamController<List<Pelicula>>.broadcast();
+  Function(List<Pelicula>) get espanolSink => _espanolStreamController.sink.add;
+  Stream<List<Pelicula>> get espanolStream => _espanolStreamController.stream;
+
+  // Animadas
+  int _animadasPage = 0;
+  bool _cargandoAnimadas = false;
+  List<Pelicula> _animadas = new List();
+  final _animadasStreamController = StreamController<List<Pelicula>>.broadcast();
+  Function(List<Pelicula>) get animadasSink => _animadasStreamController.sink.add;
+  Stream<List<Pelicula>> get animadasStream => _animadasStreamController.stream;
+
 
   void disposeStreams() {
     _popularesStreamController?.close();
     _topRatedStreamController?.close();
+    _latestStreamController?.close();
+    _upcomingStreamController?.close();
+    _espanolStreamController?.close();
+    _animadasStreamController?.close();
   }
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url) async {
@@ -80,6 +115,10 @@ class PeliculasProvider {
 
   }
 
+// ==============================================================
+// Get Peliculas by Category
+// ==============================================================
+
   Future<List<Pelicula>> getPopulares() async {
 
     if (_cargandoPopulares) return [];
@@ -91,7 +130,8 @@ class PeliculasProvider {
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key' : _apiKey,
       'language': _language,
-      'page': _popularesPage.toString()
+      'page': _popularesPage.toString(),
+      'sort_by': 'popularity.desc'
     });
 
     final resp = await _procesarRespuesta(url);
@@ -116,7 +156,9 @@ class PeliculasProvider {
     final url = Uri.https(_url, '3/movie/top_rated', {
       'api_key' : _apiKey,
       'language': _language,
-      'page': _topRatedPage.toString()
+      'page': _topRatedPage.toString(),
+      'sort_by': 'popularity.desc'
+
     });
 
     final resp = await _procesarRespuesta(url);
@@ -130,4 +172,109 @@ class PeliculasProvider {
 
   }
   
+  Future<List<Pelicula>> getLatest() async {
+
+    if (_cargandoLatest) return [];
+
+    _cargandoLatest = true;
+
+    _latestPage++;
+
+    final url = Uri.https(_url, '3/movie/now_playing', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'page': _latestPage.toString()
+    });
+
+    final resp = await _procesarRespuesta(url);
+
+    _latest.addAll(resp);
+
+    latestSink(_latest);
+
+    _cargandoLatest = false;
+    return resp;
+
+  }
+
+  Future<List<Pelicula>> getUpcoming() async {
+
+    if (_cargandoUpcoming) return [];
+
+    _cargandoUpcoming = true;
+
+    _upcomingPage++;
+
+    final url = Uri.https(_url, '3/movie/upcoming', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'page': _upcomingPage.toString(),
+      'sort_by': 'vote_average.desc'
+    });
+
+    final resp = await _procesarRespuesta(url);
+
+    _upcoming.addAll(resp);
+
+    upcomingSink(_upcoming);
+
+    _cargandoUpcoming = false;
+    return resp;
+
+  }
+
+  Future<List<Pelicula>> getEspanol() async {
+
+    if (_cargandoEspanol) return [];
+
+    _cargandoEspanol = true;
+
+    _espanolPage++;
+
+    final url = Uri.https(_url, '3/discover/movie', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'with_original_language': 'es',
+      'page': _espanolPage.toString(),
+      'sort_by': 'vote_average.desc'
+    });
+
+    final resp = await _procesarRespuesta(url);
+
+    _espanol.addAll(resp);
+
+    espanolSink(_espanol);
+
+    _cargandoEspanol = false;
+    return resp;
+
+  }
+
+  Future<List<Pelicula>> getAnimadas() async {
+
+    if (_cargandoAnimadas) return [];
+
+    _cargandoAnimadas = true;
+
+    _animadasPage++;
+
+    final url = Uri.https(_url, '3/movie/top_rated', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'with_genres': '16',
+      'page': _animadasPage.toString(),
+      'sort_by': 'vote_average.desc'
+    });
+
+    final resp = await _procesarRespuesta(url);
+
+    _animadas.addAll(resp);
+
+    animadasSink(_animadas);
+
+    _cargandoAnimadas = false;
+    return resp;
+
+  }
+
 }
