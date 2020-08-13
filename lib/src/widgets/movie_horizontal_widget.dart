@@ -12,7 +12,8 @@ class MovieHorizontal extends StatelessWidget {
 
   final _pageController = new PageController(
     initialPage: 1,
-    viewportFraction: 0.3
+    viewportFraction: 0.25,
+    keepPage: true
   );
 
   @override
@@ -23,8 +24,7 @@ class MovieHorizontal extends StatelessWidget {
     _pageController.addListener(() { 
       if (_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200) {
         siguientePagina();
-      } else {
-      }
+      } 
     });
 
     return Container(
@@ -45,9 +45,15 @@ class MovieHorizontal extends StatelessWidget {
     pelicula.uniqueId = pelicula.id.toString() + '-' + seccion;
 
     final tarjeta = Container(
+
+        transform: Matrix4.translationValues(-29.0, 0.0, 0.0),
        
-        margin: EdgeInsets.only(right: 10.0),
+        margin: EdgeInsets.only(right: 0.0),
         child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+
           children: <Widget>[
             Hero(
               tag: pelicula.uniqueId,
@@ -57,7 +63,7 @@ class MovieHorizontal extends StatelessWidget {
                   placeholder: AssetImage('assets/img/no-image.jpg'), 
                   image: NetworkImage(pelicula.getPosterImg()),
                   fit: BoxFit.cover,
-                  height: 170.0,
+                  height: 130.0,
                 ),
               ),
             ),
@@ -65,7 +71,7 @@ class MovieHorizontal extends StatelessWidget {
             Text(
               pelicula.title,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.caption,
+              style: TextStyle(color: Colors.white70, fontSize: 14.0)
             )
           ],
         ),

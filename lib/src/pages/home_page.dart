@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black12,
       appBar: AppBar(
-        title: Text('Peliculas', style: TextStyle(color: Colors.white, fontSize: 30.0)),
+        title: Text('Peliculas', style: TextStyle(fontSize: 30.0)),
         centerTitle: false,
         backgroundColor: Colors.black26,
         actions: <Widget>[
@@ -138,13 +138,14 @@ class HomePage extends StatelessWidget {
 
           Container(
             padding: EdgeInsets.only(left: 20.0, top: 20.0),
-            child: Text(titulo, style: TextStyle(color: Colors.white, fontSize: 23.0, fontWeight: FontWeight.bold))
+            child: Text(titulo, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))
           ),
 
           SizedBox(height: 10.0),
           
           // Crea el StreamBuilder con el dataset de peliculas
           StreamBuilder(
+            
             stream: stream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
 

@@ -59,7 +59,6 @@ class PeliculasProvider {
   Function(List<Pelicula>) get animadasSink => _animadasStreamController.sink.add;
   Stream<List<Pelicula>> get animadasStream => _animadasStreamController.stream;
 
-
   void disposeStreams() {
     _popularesStreamController?.close();
     _topRatedStreamController?.close();
@@ -158,7 +157,6 @@ class PeliculasProvider {
       'language': _language,
       'page': _topRatedPage.toString(),
       'sort_by': 'popularity.desc'
-
     });
 
     final resp = await _procesarRespuesta(url);

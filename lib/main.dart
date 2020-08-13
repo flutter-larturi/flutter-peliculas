@@ -13,6 +13,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue, 
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.black12),
+        inputDecorationTheme: InputDecorationTheme(border: UnderlineInputBorder())
+      ),
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(brightness: Brightness.dark),
       title: 'Peliculas',
       initialRoute: '/',
       routes: {
@@ -20,7 +28,6 @@ class MyApp extends StatelessWidget {
         'detalle'   :   (BuildContext context) => PeliculaDetalle(),
         'actor'     :   (BuildContext context) => ActorDetelle(),
       },
-      
     );
   }
 }

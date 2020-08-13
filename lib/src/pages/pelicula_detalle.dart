@@ -45,7 +45,7 @@ class PeliculaDetalle extends StatelessWidget {
 Widget _crearAppbar(Pelicula pelicula) {
   return SliverAppBar(
     elevation: 2.0,
-    backgroundColor: Colors.indigo,
+    backgroundColor: Colors.black,
     expandedHeight: 200.0,
     floating: false,
     pinned: true,
@@ -92,14 +92,14 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(pelicula.title, style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+              Text(pelicula.title, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
               SizedBox(height: 4.0),
               Text(pelicula.originalTitle + ' (' + pelicula.releaseDate.substring(0,4) + ')', style: TextStyle(color: Colors.grey, fontSize: 18.0), overflow: TextOverflow.ellipsis),
               SizedBox(height: 8.0),
               Row(
                 children: <Widget>[
                   Icon(Icons.star, color: Colors.white),
-                  Text(pelicula.voteAverage.toString(), style: TextStyle(color: Colors.white, fontSize: 19.0)),
+                  Text(pelicula.voteAverage.toString(), style: TextStyle(fontSize: 19.0)),
                   
                 ],
               ),
@@ -115,7 +115,7 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
 Widget _descripcion(Pelicula pelicula) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-      child: Text(pelicula.overview, textAlign: TextAlign.justify, style: TextStyle(color: Colors.white70, fontSize: 18.0)),
+      child: Text(pelicula.overview, textAlign: TextAlign.left, style: TextStyle(color: Colors.white70, fontSize: 17.0)),
     );
 }
 
@@ -175,7 +175,7 @@ Widget _actorTarjeta(Actor actor) {
           child: Text(
             actor.name,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.white, fontSize: 16.0)
+            style: TextStyle(fontSize: 16.0)
           ),
         )
       ],
