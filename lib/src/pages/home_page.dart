@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
-import 'package:peliculas/src/widgets/movie_horizontal_widget.dart';
 
 import 'package:peliculas/src/search/search_delegate.dart';
+import 'package:peliculas/src/utils/utils.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _populares(BuildContext context) {
-    return _genericHorizontalWidget(
+    return genericHorizontalWidget(
       context, 
       'Populares',
        peliculasProvider.popularesStream, 
@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _topRated(BuildContext context) {
-    return _genericHorizontalWidget(
+    return genericHorizontalWidget(
       context, 
       'Mejor Puntuación', 
       peliculasProvider.topRatedStream, 
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _latest(BuildContext context) {
-    return _genericHorizontalWidget(
+    return genericHorizontalWidget(
       context, 
       'Estrenos', 
       peliculasProvider.latestStream, 
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _upcoming(BuildContext context) {
-    return _genericHorizontalWidget(
+    return genericHorizontalWidget(
       context, 
       'Proximamente', 
       peliculasProvider.upcomingStream, 
@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _espanol(BuildContext context) {
-    return _genericHorizontalWidget(
+    return genericHorizontalWidget(
       context, 
       'En español', 
       peliculasProvider.espanolStream, 
@@ -112,59 +112,13 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _animadas(BuildContext context) {
-    return _genericHorizontalWidget(
+    return genericHorizontalWidget(
       context, 
       'Animadas', 
       peliculasProvider.animadasStream, 
       peliculasProvider.getAnimadas,
       'animadas'
     );
-  }
-
-  Widget _genericHorizontalWidget(
-    BuildContext context, 
-    String titulo, 
-    Stream stream, 
-    Function siguiente, 
-    String seccion
-) {
-
-    return Container(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-
-          Container(
-            padding: EdgeInsets.only(left: 20.0, top: 20.0),
-            child: Text(titulo, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))
-          ),
-
-          SizedBox(height: 10.0),
-          
-          // Crea el StreamBuilder con el dataset de peliculas
-          StreamBuilder(
-            
-            stream: stream,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-              if(snapshot.hasData) {
-                // Por cada pelicula arma la tarjeta con link a la pagina de detalle
-                return MovieHorizontal(
-                  peliculas: snapshot.data,
-                  siguientePagina: siguiente,
-                  seccion: seccion
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        ],
-      ),
-    );
-
   }
 
   Widget _swiperTarjetas() {

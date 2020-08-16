@@ -10,10 +10,9 @@ class Peliculas {
       final pelicula = new Pelicula.fromJsonMap(item);
       items.add(pelicula);
     }
-    
   }
-}
 
+}
 
 class Pelicula {
   
@@ -52,12 +51,11 @@ class Pelicula {
   });
 
   Pelicula.fromJsonMap(Map<String, dynamic> json) {
-
+    id               = json['id'];
     popularity       = json['popularity'] / 1;
     voteCount        = json['vote_count'];
     video            = json['video'];
     posterPath       = json['poster_path'];
-    id               = json['id'];
     adult            = json['adult'];
     backdropPath     = json['backdrop_path'];
     originalLanguage = json['original_language'];
@@ -67,7 +65,6 @@ class Pelicula {
     voteAverage      = json['vote_average'] / 1;
     overview         = json['overview'];
     releaseDate      = json['release_date'];
-
   }
 
   getPosterImg() {
@@ -84,10 +81,8 @@ class Pelicula {
     } else {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
-
   }
 
-
-
 }
+
 

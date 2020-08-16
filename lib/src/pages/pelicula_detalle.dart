@@ -115,7 +115,7 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
 Widget _descripcion(Pelicula pelicula) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-      child: Text(pelicula.overview, textAlign: TextAlign.left, style: TextStyle(color: Colors.white70, fontSize: 17.0)),
+      child: Text(pelicula.overview, textAlign: TextAlign.left, style: TextStyle(color: Colors.white70, fontSize: 16.0)),
     );
 }
 
@@ -150,23 +150,26 @@ Widget _crearActoresPageView(List<Actor> actores) {
           initialPage: 1        
         ),
         itemCount: actores.length,
-        itemBuilder: (context, i) => _actorTarjeta(actores[i]),
+        itemBuilder: (context, i) => _actorTarjeta(context, actores[i]),
       ),
     );
 }
 
-Widget _actorTarjeta(Actor actor) {
-  return Container(
+Widget _actorTarjeta(BuildContext context, Actor actor) {
+  final actorCard = Container(
     child: Column(
       children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.circular(200.0),
-          child: FadeInImage(
-            placeholder: AssetImage('assets/img/no-image.jpg'), 
-            image: NetworkImage(actor.getFoto()),
-            height: 100.0,
-            width: 100.0,
-            fit: BoxFit.cover,
+        Hero(
+          tag: actor.id,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(200.0),
+            child: FadeInImage(
+              placeholder: AssetImage('assets/img/no-image.jpg'), 
+              image: NetworkImage(actor.getFoto()),
+              height: 80.0,
+              width: 80.0,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Container(
@@ -175,10 +178,18 @@ Widget _actorTarjeta(Actor actor) {
           child: Text(
             actor.name,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 16.0)
+            style: TextStyle(fontSize: 14.0)
           ),
         )
       ],
     ),
   );
+
+  return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, 'actor', arguments: actor);
+        },
+        child: actorCard,
+      );
+
 }

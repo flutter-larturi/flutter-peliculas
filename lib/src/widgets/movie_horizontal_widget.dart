@@ -48,7 +48,7 @@ class MovieHorizontal extends StatelessWidget {
 
         transform: Matrix4.translationValues(-29.0, 0.0, 0.0),
        
-        margin: EdgeInsets.only(right: 0.0),
+        margin: EdgeInsets.only(right: 12.0),
         child: Column(
 
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,26 +63,34 @@ class MovieHorizontal extends StatelessWidget {
                   placeholder: AssetImage('assets/img/no-image.jpg'), 
                   image: NetworkImage(pelicula.getPosterImg()),
                   fit: BoxFit.cover,
-                  height: 130.0,
+                  height: 120.0,
                 ),
               ),
             ),
-            SizedBox(height: 5.0),
-            Text(
-              pelicula.title,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.white70, fontSize: 14.0)
+            Column(
+              
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+
+              children: [
+                Text(
+                  pelicula.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.white70, fontSize: 14.0)
+                ),
+              ]
+              
             )
           ],
         ),
       );
 
-      return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, 'detalle', arguments: pelicula);
-        },
-        child: tarjeta,
-      );
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+      },
+      child: tarjeta,
+    );
   }
 
   // No se usa luego de haber incluido el metodo _tarjeta

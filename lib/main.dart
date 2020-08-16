@@ -1,12 +1,23 @@
 // Dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Pages
 import 'package:peliculas/src/pages/home_page.dart';
 import 'package:peliculas/src/pages/pelicula_detalle.dart';
 import 'package:peliculas/src/pages/actor_detalle.dart';
  
-void main() => runApp(MyApp());
+
+
+void main(){
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations(
+       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+       .then((_){
+           runApp(MyApp());
+       }
+    );
+}
  
 class MyApp extends StatelessWidget {
   @override

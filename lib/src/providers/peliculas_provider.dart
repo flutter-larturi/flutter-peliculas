@@ -58,6 +58,14 @@ class PeliculasProvider {
   final _animadasStreamController = StreamController<List<Pelicula>>.broadcast();
   Function(List<Pelicula>) get animadasSink => _animadasStreamController.sink.add;
   Stream<List<Pelicula>> get animadasStream => _animadasStreamController.stream;
+  
+  // Peliculas del Actor
+  int _peliculasActorPage = 0;
+  bool _cargandoPeliculasActor = false;
+  List<Pelicula> _peliculasActor = new List();
+  final _peliculasActorStreamController = StreamController<List<Pelicula>>.broadcast();
+  Function(List<Pelicula>) get peliculasActorSink => _peliculasActorStreamController.sink.add;
+  Stream<List<Pelicula>> get peliculasActorStream => _peliculasActorStreamController.stream;
 
   void disposeStreams() {
     _popularesStreamController?.close();
@@ -66,12 +74,20 @@ class PeliculasProvider {
     _upcomingStreamController?.close();
     _espanolStreamController?.close();
     _animadasStreamController?.close();
+    _peliculasActorStreamController?.close();
   }
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url) async {
     final resp = await http.get(url);
     final decodeData = json.decode(resp.body);
     final peliculas = new Peliculas.fromJsonList(decodeData['results']);
+    return peliculas.items;
+  }
+
+  Future<List<Pelicula>> _procesarRespuestaPeliculasActor(Uri url) async {
+    final resp = await http.get(url);
+    final decodeData = json.decode(resp.body);
+    final peliculas = new Peliculas.fromJsonList(decodeData['cast']);
     return peliculas.items;
   }
 
@@ -274,5 +290,36 @@ class PeliculasProvider {
     return resp;
 
   }
+
+
+// ==============================================================
+// Get Peliculas del actor
+// ==============================================================
+
+Future<List<Pelicula>> getPeliculasActor(Actor actor) async {
+
+    if (_cargandoPeliculasActor) return [];
+
+    _cargandoPeliculasActor = true;
+
+    _peliculasActorPage++;
+
+    final url = Uri.https(_url, '3/person/${actor.id}/movie_credits', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'page': _peliculasActorPage.toString(),
+    });
+
+    final resp = await _procesarRespuestaPeliculasActor(url);
+
+    _peliculasActor.addAll(resp);
+
+    peliculasActorSink(_peliculasActor);
+
+    _cargandoPeliculasActor = false;
+    return resp;
+
+  }
+
 
 }
