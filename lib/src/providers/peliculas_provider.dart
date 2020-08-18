@@ -4,12 +4,13 @@ import 'package:http/http.dart' as http;
 
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/models/actores_model.dart';
+import 'package:peliculas/src/config/config.dart';
 
 class PeliculasProvider {
 
-  String _apiKey   = 'a6c660c309daa96a66064788072ed995';
-  String _url      = 'api.themoviedb.org';
-  String _language = 'es-ES';
+  String _apiKey   = ConfigApp().apiKey;
+  String _url      = ConfigApp().url;
+  String _language = ConfigApp().language;
 
   // Populares
   int _popularesPage = 0;

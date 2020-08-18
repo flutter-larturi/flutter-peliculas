@@ -1,3 +1,5 @@
+import 'package:peliculas/src/config/config.dart';
+
 class Peliculas {
   List<Pelicula> items = new List();
 
@@ -69,7 +71,7 @@ class Pelicula {
 
   getPosterImg() {
     if (posterPath == null || posterPath == 'null') {
-        return 'https://labs357.com/nuevo/wp-content/themes/consultix/images/no-image-found-360x250.png';
+        return ConfigApp().noImagePictureUrl;
     } else {
         return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }

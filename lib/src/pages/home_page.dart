@@ -67,7 +67,8 @@ class HomePage extends StatelessWidget {
       'Populares',
        peliculasProvider.popularesStream, 
        peliculasProvider.getPopulares,
-       'populares'
+       'populares',
+       'peliculas'
     );
   }
 
@@ -77,7 +78,8 @@ class HomePage extends StatelessWidget {
       'Mejor Puntuación', 
       peliculasProvider.topRatedStream, 
       peliculasProvider.getTopRated,
-      'toprated'
+      'toprated',
+      'peliculas'
     );
   }
 
@@ -87,7 +89,8 @@ class HomePage extends StatelessWidget {
       'Estrenos', 
       peliculasProvider.latestStream, 
       peliculasProvider.getLatest,
-      'estrenos'
+      'estrenos',
+      'peliculas'
     );
   }
 
@@ -97,7 +100,8 @@ class HomePage extends StatelessWidget {
       'Proximamente', 
       peliculasProvider.upcomingStream, 
       peliculasProvider.getUpcoming,
-      'proximamente'
+      'proximamente',
+      'peliculas'
     );
   }
 
@@ -107,7 +111,8 @@ class HomePage extends StatelessWidget {
       'En español', 
       peliculasProvider.espanolStream, 
       peliculasProvider.getEspanol,
-      'espanol'
+      'espanol',
+      'peliculas'
     );
   }
 
@@ -117,7 +122,8 @@ class HomePage extends StatelessWidget {
       'Animadas', 
       peliculasProvider.animadasStream, 
       peliculasProvider.getAnimadas,
-      'animadas'
+      'animadas',
+      'peliculas'
     );
   }
 

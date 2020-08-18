@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/config/config.dart';
 
-import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/models/serie_model.dart';
 import 'package:peliculas/src/widgets/tarjeta_widget.dart';
 
-class MovieHorizontal extends StatelessWidget {
+class SerieHorizontal extends StatelessWidget {
 
-  final List<Pelicula> peliculas;
+  final List<Serie> series;
   final Function siguientePagina;
   final String seccion;
 
-  MovieHorizontal({ @required this.peliculas,  @required this.siguientePagina, @required this.seccion });
+  SerieHorizontal({ @required this.series,  @required this.siguientePagina, @required this.seccion });
 
   final _pageController = new PageController(
     initialPage: 1,
@@ -34,23 +34,23 @@ class MovieHorizontal extends StatelessWidget {
       child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
-        itemCount: peliculas.length,
+        itemCount: series.length,
         itemBuilder: (context, i) {
-          return _tarjeta(context, peliculas[i], seccion);
+          return _tarjeta(context, series[i], seccion);
         },
       ),
     );
   }
 
-  Widget _tarjeta(BuildContext context, Pelicula pelicula, String seccion) {
+  Widget _tarjeta(BuildContext context, Serie serie, String seccion) {
 
-    pelicula.uniqueId = pelicula.id.toString() + '-' + seccion;
+    serie.uniqueId = serie.id.toString() + '-' + seccion;
 
-    final tarjeta = Tarjeta(tipo: 'pelicula', pelicula: pelicula);
-
+    final tarjeta = Tarjeta(tipo: 'serie', serie: serie);
+    
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+        // Navigator.pushNamed(context, 'detalle', arguments: serie);
       },
       child: tarjeta,
     );
