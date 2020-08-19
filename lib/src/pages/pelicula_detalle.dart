@@ -94,13 +94,23 @@ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
             children: <Widget>[
               Text(pelicula.title, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
               SizedBox(height: 4.0),
-              Text(pelicula.originalTitle + ' (' + pelicula.releaseDate.substring(0,4) + ')', style: TextStyle(color: Colors.grey, fontSize: 18.0), overflow: TextOverflow.ellipsis),
-              SizedBox(height: 8.0),
+              Text(pelicula.originalTitle, style: TextStyle(color: Colors.grey, fontSize: 18.0), overflow: TextOverflow.ellipsis),
+            
+              SizedBox(height: 12.0),
+
               Row(
                 children: <Widget>[
-                  Icon(Icons.star, color: Colors.white),
-                  Text(pelicula.voteAverage.toString(), style: TextStyle(fontSize: 19.0)),
+                  // Puntaje
+                  Icon(Icons.star, color: Colors.white, size: 16.0),
+                  SizedBox(width: 4.0),
+                  Text(pelicula.voteAverage.toString(), style: TextStyle(fontSize: 16.0)),
                   
+                  SizedBox(width: 15.0),
+
+                  // Año
+                  Icon(Icons.calendar_today, color: Colors.white, size: 16.0),
+                  SizedBox(width: 4.0),
+                  Text(pelicula.releaseDate.substring(0,4), style: TextStyle(fontSize: 16.0)),
                 ],
               ),
             ],

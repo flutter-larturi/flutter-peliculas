@@ -14,7 +14,7 @@ class Series {
       final serie = new Serie.fromJsonMap(item);
       esTvShow = false;
 
-      // generos de TV a eliminar 10763, 10764, 10767
+      // Generos de TV a eliminar
       // https://developers.themoviedb.org/3/genres/get-tv-list
 
       if (serie.genres.length == 0) {

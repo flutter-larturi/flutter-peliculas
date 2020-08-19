@@ -147,7 +147,7 @@ class PeliculasProvider {
       'api_key' : _apiKey,
       'language': _language,
       'page': _popularesPage.toString(),
-      'sort_by': 'popularity.desc'
+      'sort_by': 'release_date.desc'
     });
 
     final resp = await _procesarRespuesta(url);
@@ -198,7 +198,8 @@ class PeliculasProvider {
     final url = Uri.https(_url, '3/movie/now_playing', {
       'api_key' : _apiKey,
       'language': _language,
-      'page': _latestPage.toString()
+      'page': _latestPage.toString(),
+      'sort_by': 'release_date.desc'
     });
 
     final resp = await _procesarRespuesta(url);
@@ -224,7 +225,7 @@ class PeliculasProvider {
       'api_key' : _apiKey,
       'language': _language,
       'page': _upcomingPage.toString(),
-      'sort_by': 'vote_average.desc'
+      'sort_by': 'release_date.desc'
     });
 
     final resp = await _procesarRespuesta(url);
@@ -251,7 +252,7 @@ class PeliculasProvider {
       'language': _language,
       'with_original_language': 'es',
       'page': _espanolPage.toString(),
-      'sort_by': 'vote_average.desc'
+      'sort_by': 'release_date.desc'
     });
 
     final resp = await _procesarRespuesta(url);
@@ -312,6 +313,22 @@ Future<List<Pelicula>> getPeliculasActor(Actor actor) async {
     });
 
     final resp = await _procesarRespuestaPeliculasActor(url);
+
+    // Ordeno las peliculas por fecha de lanzamiento desc
+    resp.sort((b, a) { 
+
+      // print(a.releaseDate);
+      // print(b.releaseDate);
+      // print('---------');
+
+      if(a.releaseDate == null || a.releaseDate == '') a.releaseDate = '0000';
+      if(b.releaseDate == null || b.releaseDate == '') b.releaseDate = '0000';
+
+      var anioA = int.parse(a.releaseDate.substring(0,4));
+      var anioB = int.parse(b.releaseDate.substring(0,4));
+
+      return anioA.compareTo(anioB);
+    });
 
     _peliculasActor.addAll(resp);
 

@@ -52,6 +52,18 @@ Future<List<Serie>> getSeriesActor(Actor actor) async {
 
     final resp = await _procesarRespuestaSeriesActor(url);
 
+    // Ordeno las series por fecha de lanzamiento desc
+    resp.sort((b, a) { 
+
+      if(a.firstAirDate == null || a.firstAirDate == '') a.firstAirDate = '0000';
+      if(b.firstAirDate == null || b.firstAirDate == '') b.firstAirDate = '0000';
+
+      var anioA = int.parse(a.firstAirDate.substring(0,4));
+      var anioB = int.parse(b.firstAirDate.substring(0,4));
+
+      return anioA.compareTo(anioB);
+    });
+
     _seriesActor.addAll(resp);
 
     seriesActorSink(_seriesActor);
