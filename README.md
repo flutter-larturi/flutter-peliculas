@@ -1,6 +1,6 @@
-# peliculas
+# Peliculas
 
-A new Flutter project.
+App Flutter que consume la API de [TheMovieDB](https://www.themoviedb.org/?language=es). [Curso Flutter](https://www.udemy.com/certificate/UC-cb015977-093d-4ad5-ab52-9199518b34bb/)
 
 ## Getting Started
 
